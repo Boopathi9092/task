@@ -1,10 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../model/task_model.dart';
+import '../screens/home/model/task_model.dart';
 
 class FirestoreService {
   final _db = FirebaseFirestore.instance;
 
-  Stream<List<Task>> getTasks(String userEmail) {
+  Stream<List<Task>> getTasks() {
+    return _db
+        .collection('tasks')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => Task.fromMap(doc.data())).toList());
+  }
+  Stream<List<Task>> getSahredTasks(String userEmail) {
     return _db
         .collection('tasks')
         .where('sharedWith', arrayContains: userEmail)

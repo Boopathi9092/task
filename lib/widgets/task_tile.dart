@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../model/task_model.dart';
+import 'package:share_plus/share_plus.dart';
+import '../screens/home/model/task_model.dart';
 
 
 class TaskTile extends StatelessWidget {
@@ -21,10 +22,17 @@ class TaskTile extends StatelessWidget {
               value: task.completed,
               onChanged: (_) => onToggle(task),
             ),
-            const SizedBox(width: 8,),
+            const SizedBox(width: 4,),
             InkWell(
                 onTap: ()=>onDelete(task),
-                child: Icon(Icons.delete,size: 20,))
+                child: Icon(Icons.delete,size: 20,)),
+            const SizedBox(width: 12,),
+            InkWell(
+                onTap: (){
+                  Share.share(task.title);
+                },
+                child: Icon(Icons.share,size: 20,)),
+
           ],
         ),
       ),
